@@ -10,4 +10,6 @@ import UIKit
 extension UIColor {
     static let accent = UIColor(named: "accent")
     static let accentDark = UIColor(named: "accentDark")
+    static let accentYellow = UIColor(named: "accentYellow")
+    static let accentYellowLight = UIColor(named: "accentYellowLight")
 }

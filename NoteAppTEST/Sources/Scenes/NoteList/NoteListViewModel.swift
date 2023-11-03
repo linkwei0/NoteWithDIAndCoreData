@@ -28,10 +28,6 @@ class NoteListViewModel {
     
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
-        if dependencies.noteListService.getNotes().count == 0 {
-            let noteData = NoteData(name: "Новая заметка", body: "", image: nil)
-            dependencies.createNoteService.executeNote(.saveNote, data: noteData)
-        }
     }
     
     // MARK: - Public methods

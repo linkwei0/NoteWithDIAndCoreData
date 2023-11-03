@@ -8,7 +8,7 @@
 import UIKit
 
 private extension Constants {
-    static let defaultImageName = "plus"
+    static let defaultImageName = "note.text"
     static let placeholderTextField = "Новая заметка"
     static let nameSaveButton = "Сохранить"
     
@@ -20,9 +20,9 @@ private extension Constants {
 class CreateNoteViewController: BaseViewController, AlertShowing {
     // MARK: - Properties
     
-    private var noteNameTextField = UITextField()
-    private lazy var noteMainImage = UIImageView()
-    private let noteBodyTextView = UITextView()
+    private var titleTextField = UITextField()
+    private lazy var noteImageView = UIImageView()
+    private let contentTextView = UITextView()
     
     private let viewModel: CreateNoteViewModel
     
@@ -49,62 +49,61 @@ class CreateNoteViewController: BaseViewController, AlertShowing {
     // MARK: - Setup
     
     private func setup() {
-        setupNoteMainImage()
-        setupNoteNameTextField()
+        setupNoteImageView()
+        setupTitleTextField()
         setupNoteBodyTextView()
         setupSaveButton()
     }
     
-    private func setupNoteMainImage() {
-        let imageSize = 120.0
-        view.addSubview(noteMainImage)
-        noteMainImage.layer.masksToBounds = false
-        noteMainImage.isUserInteractionEnabled = true
-        noteMainImage.contentMode = .scaleToFill
-        noteMainImage.image = UIImage(systemName: Constants.defaultImageName)
-        noteMainImage.layer.borderColor = UIColor.accent?.cgColor
-        noteMainImage.layer.borderWidth = 1.0
-        noteMainImage.clipsToBounds = true
-
-        noteMainImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnImage)))
+    private func setupNoteImageView() {
+        view.addSubview(noteImageView)
+        noteImageView.image = UIImage(systemName: Constants.defaultImageName)?.withRenderingMode(.alwaysTemplate)
+        noteImageView.tintColor = .systemOrange
         
-        noteMainImage.snp.makeConstraints { make in
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapOnImage))
+        noteImageView.addGestureRecognizer(tap)
+    
+        noteImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(42)
             make.centerX.equalToSuperview()
-            make.size.equalTo(imageSize)
+            make.size.equalTo(100)
         }
-        
-        noteMainImage.layer.cornerRadius = imageSize / 2
     }
     
-    private func setupNoteNameTextField() {
-        view.addSubview(noteNameTextField)
-        noteNameTextField.placeholder = Constants.placeholderTextField
-        noteNameTextField.layer.borderColor = UIColor.accent?.cgColor
-        noteNameTextField.layer.borderWidth = 0.65
-        noteNameTextField.layer.cornerRadius = 8
+    private func setupTitleTextField() {
+        view.addSubview(titleTextField)
+        titleTextField.placeholder = Constants.placeholderTextField
+        titleTextField.layer.borderColor = UIColor.accentYellow?.cgColor
+        titleTextField.layer.borderWidth = 0.7
+        titleTextField.layer.cornerRadius = 12
+        titleTextField.font = UIFont.boldSystemFont(ofSize: 18)
+        titleTextField.setLeftPaddingPoints(12)
+        titleTextField.setRightPaddingPoints(12)
         
-        noteNameTextField.addTarget(self, action: #selector(noteNameDidChange), for: .editingChanged)
+        titleTextField.addTarget(self, action: #selector(noteNameDidChange), for: .editingChanged)
         
-        noteNameTextField.snp.makeConstraints { make in
-            make.top.equalTo(noteMainImage.snp.bottom).offset(24)
+        titleTextField.snp.makeConstraints { make in
+            make.top.equalTo(noteImageView.snp.bottom).offset(24)
             make.left.right.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }
     }
     
     private func setupNoteBodyTextView() {
-        view.addSubview(noteBodyTextView)
-        noteBodyTextView.indicatorStyle = .white
-        noteBodyTextView.layer.borderColor = UIColor.accent?.cgColor
-        noteBodyTextView.layer.borderWidth = 0.65
-        noteBodyTextView.layer.cornerRadius = 8
-        noteBodyTextView.font = UIFont.systemFont(ofSize: 16)
-        noteBodyTextView.delegate = self
-        noteBodyTextView.snp.makeConstraints { make in
-            make.top.equalTo(noteNameTextField.snp.bottom).offset(20)
+        view.addSubview(contentTextView)
+        contentTextView.indicatorStyle = .white
+        contentTextView.layer.borderColor = UIColor.accentYellow?.cgColor
+        contentTextView.layer.borderWidth = 0.6
+        contentTextView.layer.cornerRadius = 12
+        contentTextView.font = UIFont.systemFont(ofSize: 16)
+        contentTextView.textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        contentTextView.textContainer.heightTracksTextView = true
+        contentTextView.isScrollEnabled = false
+        contentTextView.delegate = self
+        contentTextView.snp.makeConstraints { make in
+            make.top.equalTo(titleTextField.snp.bottom).offset(20)
             make.left.right.equalToSuperview().inset(16)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.height.greaterThanOrEqualTo(150)
         }
     }
     
@@ -116,23 +115,23 @@ class CreateNoteViewController: BaseViewController, AlertShowing {
     
     private func bindToViewModel() {
         viewModel.onDidRequestToUpdateViewStorageData = { [weak self] note, noteImage in
-            self?.noteMainImage.image = noteImage == nil ? UIImage(systemName: Constants.defaultImageName) : noteImage
-            self?.noteNameTextField.text = note?.name
-            self?.noteBodyTextView.text = note?.body
+            self?.noteImageView.image = noteImage == nil ? UIImage(systemName: Constants.defaultImageName) : noteImage
+            self?.titleTextField.text = note?.name
+            self?.contentTextView.text = note?.body
         }
         
         viewModel.onDidRequestToUpdateViewTemporyData = { [weak self] name, body, image in
-            self?.noteMainImage.image = image == nil ? UIImage(systemName: Constants.defaultImageName) : image
-            self?.noteNameTextField.text = name
-            self?.noteBodyTextView.text = body
+            self?.noteImageView.image = image == nil ? UIImage(systemName: Constants.defaultImageName) : image
+            self?.titleTextField.text = name
+            self?.contentTextView.text = body
         }
     }
     
     // MARK: - IBActions
     
     @objc private func saveNote() {
-        if noteNameTextField.text != "" {
-            viewModel.saveNote(name: noteNameTextField.text!, body: noteBodyTextView.text)
+        if titleTextField.text != "" {
+            viewModel.saveNote(name: titleTextField.text!, body: contentTextView.text)
         } else {
             showInfoAlert(title: Constants.alertTitle, description: Constants.alertMessage,
                           cancelButtonTitle: Constants.alertCancelButton)
@@ -144,12 +143,12 @@ class CreateNoteViewController: BaseViewController, AlertShowing {
     }
     
     @objc private func noteNameDidChange() {
-        viewModel.noteDidChange(noteNameText: noteNameTextField.text, noteBodyText: noteBodyTextView.text)
+        viewModel.noteDidChange(noteNameText: titleTextField.text, noteBodyText: contentTextView.text)
     }
 }
 
 extension CreateNoteViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        viewModel.noteDidChange(noteNameText: noteNameTextField.text, noteBodyText: noteBodyTextView.text)
+        viewModel.noteDidChange(noteNameText: titleTextField.text, noteBodyText: contentTextView.text)
     }
 }

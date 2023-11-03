@@ -64,8 +64,8 @@ class NoteListViewController: BaseViewController {
         addButton.setTitle(Constants.titleNewNote, for: .normal)
         addButton.setTitleColor(.white, for: .normal)
         addButton.layer.cornerRadius = 12
-        addButton.backgroundColor = .accentDark
-        addButton.addTarget(self, action: #selector(showCreateNoteScreen), for: .touchUpInside)
+        addButton.backgroundColor = .systemOrange
+        addButton.addTarget(self, action: #selector(didTapAddNoteButton), for: .touchUpInside)
         addButton.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(32)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
@@ -85,7 +85,7 @@ class NoteListViewController: BaseViewController {
     
     // MARK: - IBActions
     
-    @objc private func showCreateNoteScreen() {
+    @objc private func didTapAddNoteButton() {
         viewModel.showCreateNoteScreen(indexPath: nil)
     }
 }

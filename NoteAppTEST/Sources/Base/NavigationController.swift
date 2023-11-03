@@ -26,7 +26,7 @@ class NavigationController: UINavigationController {
     
     func configureDefaultNavigationBarAppearance() {
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .accentDark
+        appearance.backgroundColor = .systemOrange
         appearance.shadowColor = .clear
         appearance.shadowImage = UIImage()
         navigationBar.standardAppearance = appearance

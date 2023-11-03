@@ -39,6 +39,7 @@
 		ADE4FF64295867290090A02F /* AlertShowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE4FF63295867290090A02F /* AlertShowing.swift */; };
 		ADE4FF66295875380090A02F /* CoreDataServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE4FF65295875380090A02F /* CoreDataServiceError.swift */; };
 		ADE4FF6829588E270090A02F /* ImagePickerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE4FF6729588E270090A02F /* ImagePickerCoordinator.swift */; };
+		ADF202BC2AF4F33E00D65956 /* UITextField+Insets.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF202BB2AF4F33E00D65956 /* UITextField+Insets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +78,7 @@
 		ADE4FF63295867290090A02F /* AlertShowing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertShowing.swift; sourceTree = "<group>"; };
 		ADE4FF65295875380090A02F /* CoreDataServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataServiceError.swift; sourceTree = "<group>"; };
 		ADE4FF6729588E270090A02F /* ImagePickerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCoordinator.swift; sourceTree = "<group>"; };
+		ADF202BB2AF4F33E00D65956 /* UITextField+Insets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Insets.swift"; sourceTree = "<group>"; };
 		F864CE29EFD2B08D504C88C9 /* Pods_NoteAppTEST.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoteAppTEST.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -183,6 +185,7 @@
 		ADE4FF5129585F8F0090A02F /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				ADD6AD912954D61900E688BB /* NoteAppTEST.xcdatamodeld */,
 				ADD6AD942954D67300E688BB /* CoreDataService.swift */,
 				ADE4FF5F295861270090A02F /* CoreDataService+NoteList.swift */,
 				ADE4FF61295861320090A02F /* CoreDataService+CreateNote.swift */,
@@ -240,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				ADD6AD982954D90300E688BB /* UIColor+AppColors.swift */,
+				ADF202BB2AF4F33E00D65956 /* UITextField+Insets.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -297,17 +301,8 @@
 		ADE4FF5D295860D70090A02F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				ADD6AD912954D61900E688BB /* NoteAppTEST.xcdatamodeld */,
-				ADE4FF5E295860E80090A02F /* CoreDataModel */,
 			);
 			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		ADE4FF5E295860E80090A02F /* CoreDataModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CoreDataModel;
 			sourceTree = "<group>";
 		};
 		ADE4FF6D2958B2E90090A02F /* ImagePicker */ = {
@@ -449,6 +444,7 @@
 				ADD6AD9D2956297400E688BB /* NoteCellViewModel.swift in Sources */,
 				ADD6AD5F2954C1FF00E688BB /* SceneDelegate.swift in Sources */,
 				ADE4FF64295867290090A02F /* AlertShowing.swift in Sources */,
+				ADF202BC2AF4F33E00D65956 /* UITextField+Insets.swift in Sources */,
 				ADD6AD952954D67300E688BB /* CoreDataService.swift in Sources */,
 				ADD6AD792954C52800E688BB /* NavigationPopObserver.swift in Sources */,
 				ADD6AD9B2954DC7B00E688BB /* TitleView.swift in Sources */,
